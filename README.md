@@ -68,6 +68,10 @@ Build steps are included to ensure:
 * [Mongoose](http://mongoosejs.com/) - Object Data Modeling (ODM) for mongo
 * [Express](https://expressjs.com/) - Web Application Framework
 
+## Worth noting
+
+The `config` file has been commited to allow local deployment and testing, under usual circumstances this would have been added to the `gitignore`.
+
 ## Acknowledgments
 
 Everyone at [Northcoders](https://northcoders.com/) for their outstanding curriculum and support. They pushed me and give me the knowledge and confidence to build a career in Software Development.
