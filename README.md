@@ -43,26 +43,16 @@ Each of the applications endpoints, with both successful and unsuccessful reques
 
 #### Routes
 
-* GET /api/topics
-* Return all topics
-* GET /api/topics/:topic_id/articles
-* Return all articles for a particular topic ID
-* GET /api/articles
-* Return all articles
-* GET /api/articles/:article_id/
-* Return an individual article by its ID
-* GET /api/articles/:article_id/comments
-* Return all comments for a single article ID
-* POST /api/articles/:article_id/comments
-* Add a new comment to the appropriate article ID
-* PUT /api/articles/:article_id
-* Increment/decrement votes on an article
-* PUT /api/comments/:comment_id
-* Increment/decrement votes on a comment
-* DELETE /api/comments/:comment_id
-* Delete a comment
-* GET /api/users/:username
-* Return a user profile
+* `GET /api/topics` - Return all topics
+* `GET /api/topics/:topic_id/articles` - Return all articles for a particular topic ID
+* `GET /api/articles` - Return all articles
+* `GET /api/articles/:article_id/` - Return an individual article by its ID
+* `GET /api/articles/:article_id/comments` - Return all comments for a single article ID
+* `POST /api/articles/:article_id/comments` - Add a new comment to the appropriate article ID
+* `PUT /api/articles/:article_id` - Increment/decrement votes on an article
+* `PUT /api/comments/:comment_id` - Increment/decrement votes on a comment
+* `DELETE /api/comments/:comment_id` - Delete a comment
+* `GET /api/users/:username` - Return a user profile
 
 ### Build steps
 
