@@ -1,0 +1,45 @@
+{
+  "name": "nc-news-be",
+  "version": "1.0.0",
+  "description": "The backend for a news aggregation site (ala Reddit)",
+  "main": "index.js",
+  "scripts": {
+    "lint": "eslint '**/*.js' --quiet/",
+    "format": "prettier --write '**/*.js'",
+    "precommit": "lint-staged && npm test",
+    "dev": "nodemon index.js",
+    "test": "mocha ./spec"
+  },
+  "lint-staged": {
+    "*.{js,json}": ["prettier --write", "git add"]
+  },
+  "author": {
+    "name": "Adie Williams",
+    "email": "hello@adie.codes",
+    "url": "http://github.com/adieCodes"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "express": "^4.16.2",
+    "mongodb": "^3.0.2",
+    "mongoose": "^5.0.6",
+    "nodemon": "^1.15.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "eslint": "^4.17.0",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
+    "eslint-plugin-prettier": "^2.6.0",
+    "eslint-plugin-react": "^7.6.1",
+    "husky": "^0.14.3",
+    "lint-staged": "^6.1.0",
+    "mocha": "^5.0.1",
+    "prettier": "1.10.2",
+    "supertest": "^3.0.0"
+  }
+}
