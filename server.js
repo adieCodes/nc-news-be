@@ -7,13 +7,13 @@ const cors = require('cors');
 const config = require('./config');
 
 const PORT = config.PORT[process.env.NODE_ENV];
-const db = config.DB[process.env.NODE_ENV];
+const DB = config.DB[process.env.NODE_ENV];
 
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(db)
-  .then(console.log('successfully connected to db', db))
+  .connect(DB)
+  .then(console.log('successfully connected to db', DB))
   .catch(err => console.log('connection failed', err));
 
 const app = express();
