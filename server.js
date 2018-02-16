@@ -1,10 +1,20 @@
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
 
 const express = require('express');
+const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const config = require('./config');
 
-const PORT = require('./config').PORT[process.env.NODE_ENV];
+const PORT = config.PORT[process.env.NODE_ENV];
+const DB = config.DB[process.env.NODE_ENV];
+
+mongoose.Promise = global.Promise;
+
+mongoose
+  .connect(DB)
+  .then(console.log('successfully connected to db', DB))
+  .catch(err => console.log('connection failed', err));
 
 const app = express();
 
