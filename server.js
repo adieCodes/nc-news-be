@@ -27,6 +27,10 @@ app.use(bodyParser.json());
 app.get('/', (req, res) => res.status(200).send({ msg: `Server running on port ${PORT}` }));
 app.use('/api', apiRouter);
 
+app.use((err, req, res, next) => {
+  if (err.status === 404) return res.status(404).send(err);
+  return next();
+});
 app.use((err, req, res) => res.status(500).send({ err }));
 
 module.exports = app;

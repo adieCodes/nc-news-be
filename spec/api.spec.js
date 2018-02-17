@@ -37,6 +37,28 @@ describe('API', () => {
           });
       });
     });
+    describe('GET /api/topics/:topid_id/articles', () => {
+      it('returns all articles for matching topic', () => {
+        return request
+          .get(`/api/topics/football/articles`)
+          .expect(200)
+          .then(res => {
+            expect(res.body.articles.length).to.equal(1);
+            expect(res.body.articles[0].title).to.be.a('string');
+            expect(res.body.articles[0].body).to.be.a('string');
+            expect(res.body.articles[0].votes).to.be.a('number');
+          });
+      });
+      it('returns 404 for invalid topic', () => {
+        return request
+          .get(`/api/topics/tennis/articles`)
+          .expect(404)
+          .then(res => {
+            expect(res.body.status).to.equal(404);
+            expect(res.body.msg).to.equal('No content');
+          });
+      });
+    });
   });
   describe('#server', () => {
     it('complete final check and disconnect', () => {
