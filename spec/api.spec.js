@@ -60,7 +60,7 @@ describe('API', () => {
       });
     });
   });
-  describe('/api/articles', () => {
+  describe('GET /api/articles', () => {
     it('returns 200 and all articles', () => {
       return request
         .get('/api/articles')
