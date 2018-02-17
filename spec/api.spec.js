@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle, arrow-body-style */
+
 process.env.NODE_ENV = 'test';
 
 const app = require('../server');
@@ -21,6 +23,21 @@ describe('API', () => {
       .catch(console.log);
   });
 
+  describe('#API', () => {
+    describe('GET /api/topics', () => {
+      it('returns all topics', () => {
+        return request
+          .get('/api/topics')
+          .expect(200)
+          .then(res => {
+            expect(res.body.topics.length).to.eql(usefulData.topics.length);
+            expect(res.body.topics[0].title).to.be.a('string');
+            expect(res.body.topics[0].slug).to.be.a('string');
+            expect(res.body.topics[0]._id).to.be.a('string');
+          });
+      });
+    });
+  });
   describe('#server', () => {
     it('complete final check and disconnect', () => {
       return request
