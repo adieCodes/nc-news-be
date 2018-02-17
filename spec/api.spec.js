@@ -25,7 +25,7 @@ describe('API', () => {
 
   describe('#API', () => {
     describe('GET /api/topics', () => {
-      it('returns all topics', () => {
+      it('returns 200 and all topics', () => {
         return request
           .get('/api/topics')
           .expect(200)
@@ -37,8 +37,8 @@ describe('API', () => {
           });
       });
     });
-    describe('GET /api/topics/:topid_id/articles', () => {
-      it('returns all articles for matching topic', () => {
+    describe('GET /api/topics/:topid/articles', () => {
+      it('returns 200 and all articles for matching topic', () => {
         return request
           .get(`/api/topics/football/articles`)
           .expect(200)
@@ -58,6 +58,20 @@ describe('API', () => {
             expect(res.body.msg).to.equal('No content');
           });
       });
+    });
+  });
+  describe('/api/articles', () => {
+    it('returns 200 and all articles', () => {
+      return request
+        .get('/api/articles')
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles.length).to.equal(usefulData.articles.length);
+          expect(res.body.articles[0].title).to.be.a('string');
+          expect(res.body.articles[0].body).to.be.a('string');
+          expect(res.body.articles[0].belongs_to).to.be.a('string');
+          expect(res.body.articles[0].votes).to.be.a('number');
+        });
     });
   });
   describe('#server', () => {
