@@ -16,4 +16,14 @@ const getTopicArticles = (req, res, next) => {
     .catch(next);
 };
 
-module.exports = { getAllArticles, getTopicArticles };
+const getArticleById = (req, res, next) => {
+  const { articleId } = req.params;
+  Article.findById(articleId)
+    .then(article => res.status(200).send({ article }))
+    .catch(err => {
+      if (err.name === 'CastError') return next({ status: 400, msg: 'Invalid Id' });
+      return next({ err });
+    });
+};
+
+module.exports = { getAllArticles, getTopicArticles, getArticleById };
