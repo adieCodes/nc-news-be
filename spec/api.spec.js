@@ -96,6 +96,31 @@ describe('API', () => {
         });
     });
   });
+  describe('GET /api/articles/:articleId/comments', () => {
+    it('returns 200 and all comments for relevant article', () => {
+      const articleId = usefulData.articles[0]._id;
+
+      return request
+        .get(`/api/articles/${articleId}/comments`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.comments.length).to.equal(usefulData.comments.length);
+          expect(res.body.comments[0].body).to.be.a('string');
+          expect(res.body.comments[0].belongs_to).to.be.a('string');
+          expect(res.body.comments[0].created_at).to.be.a('number');
+          expect(res.body.comments[0].votes).to.be.a('number');
+          expect(res.body.comments[0].created_by).to.be.a('string');
+        });
+    });
+    it('returns 404 and msg if no comments', () => {
+      return request
+        .get('/api/articles/1/comments')
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal('There are no comments for this article yet');
+        });
+    });
+  });
 });
 describe('#server', () => {
   it('complete final check and disconnect', () => {
