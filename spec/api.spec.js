@@ -25,7 +25,7 @@ describe('API', () => {
 
   describe('#API', () => {
     describe('GET /api/topics', () => {
-      it('returns all topics', () => {
+      it('returns 200 and all topics', () => {
         return request
           .get('/api/topics')
           .expect(200)
@@ -37,8 +37,8 @@ describe('API', () => {
           });
       });
     });
-    describe('GET /api/topics/:topid_id/articles', () => {
-      it('returns all articles for matching topic', () => {
+    describe('GET /api/topics/:topid/articles', () => {
+      it('returns 200 and all articles for matching topic', () => {
         return request
           .get(`/api/topics/football/articles`)
           .expect(200)
