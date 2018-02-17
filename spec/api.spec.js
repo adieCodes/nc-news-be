@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle, arrow-body-style */
+/* eslint-disable no-underscore-dangle, arrow-body-style, camelcase */
 
 process.env.NODE_ENV = 'test';
 
@@ -69,6 +69,30 @@ describe('API', () => {
           expect(res.body.articles[0].body).to.be.a('string');
           expect(res.body.articles[0].belongs_to).to.be.a('string');
           expect(res.body.articles[0].votes).to.be.a('number');
+        });
+    });
+  });
+  describe('GET /api/articles/:articleId', () => {
+    it('returns 200 and relevant article', () => {
+      const { _id, title, body, belongs_to, votes } = usefulData.articles[0];
+
+      return request
+        .get(`/api/articles/${_id}`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.article.title).to.equal(title);
+          expect(res.body.article.body).to.equal(body);
+          expect(res.body.article.belongs_to).to.equal(belongs_to);
+          expect(res.body.article.votes).to.equal(votes);
+        });
+    });
+    it('returns 400 if invalid articleId', () => {
+      return request
+        .get('/api/articles/1')
+        .expect(400)
+        .then(res => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body.msg).to.equal('Invalid Id');
         });
     });
   });
