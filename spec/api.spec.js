@@ -60,6 +60,20 @@ describe('API', () => {
       });
     });
   });
+  describe('/api/articles', () => {
+    it('returns 200 and all articles', () => {
+      return request
+        .get('/api/articles')
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles.length).to.equal(usefulData.articles.length);
+          expect(res.body.articles[0].title).to.be.a('string');
+          expect(res.body.articles[0].body).to.be.a('string');
+          expect(res.body.articles[0].belongs_to).to.be.a('string');
+          expect(res.body.articles[0].votes).to.be.a('number');
+        });
+    });
+  });
   describe('#server', () => {
     it('complete final check and disconnect', () => {
       return request
