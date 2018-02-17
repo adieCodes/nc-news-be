@@ -1,5 +1,11 @@
 const { Article } = require('../models');
 
+const getAllArticles = (req, res, next) => {
+  Article.find()
+    .then(articles => res.status(200).send({ articles }))
+    .catch(next);
+};
+
 const getTopicArticles = (req, res, next) => {
   const { topic } = req.params;
   Article.find({ belongs_to: topic })
@@ -10,4 +16,4 @@ const getTopicArticles = (req, res, next) => {
     .catch(next);
 };
 
-module.exports = { getTopicArticles };
+module.exports = { getAllArticles, getTopicArticles };
