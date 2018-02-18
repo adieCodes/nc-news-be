@@ -121,6 +121,33 @@ describe('API', () => {
         });
     });
   });
+  describe('POST /api/articles/:articleId/comments', () => {
+    const commentContent = 'This is a test comment';
+    it('returns 201, adds comment to the database and returns all comments for article', () => {
+      const articleId = usefulData.articles[0]._id;
+      const commentCountPrePost = usefulData.comments.length;
+
+      return request
+        .post(`/api/articles/${articleId}/comments`)
+        .send({ comment: commentContent })
+        .expect(201) /* 201 */
+        .then(res => {
+          expect(res.body.comments.length).to.equal(commentCountPrePost + 1);
+          expect(res.body.comments[commentCountPrePost].body).to.equal(commentContent);
+          expect(res.body.comments[0].belongs_to).to.equal(`${articleId}`);
+        });
+    });
+    it('returns 400 and msg if no comments', () => {
+      return request
+        .post('/api/articles/1/comments')
+        .send({ comment: commentContent })
+        .expect(400)
+        .then(res => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body.msg).to.equal('Invalid article Id');
+        });
+    });
+  });
 });
 describe('#server', () => {
   it('complete final check and disconnect', () => {
