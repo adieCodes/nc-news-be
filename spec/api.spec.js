@@ -148,6 +148,45 @@ describe('API', () => {
         });
     });
   });
+  describe('PUT /api/articles/:articleId', () => {
+    it('returns 200, increments vote and returns article', () => {
+      const { _id, title, body, belongs_to } = usefulData.articles[0];
+      const voteCountPrePost = usefulData.articles[0].votes;
+
+      return request
+        .put(`/api/articles/${_id}?vote=up`)
+        .expect(200) /* 201 */
+        .then(res => {
+          expect(res.body.article.votes).to.equal(voteCountPrePost + 1);
+          expect(res.body.article.title).to.equal(title);
+          expect(res.body.article.body).to.equal(body);
+          expect(res.body.article.belongs_to).to.equal(belongs_to);
+        });
+    });
+    it('returns 200, decrements vote and returns article', () => {
+      const { _id, title, body, belongs_to } = usefulData.articles[0];
+      const voteCountPrePost = usefulData.articles[0].votes;
+
+      return request
+        .put(`/api/articles/${_id}?vote=down`)
+        .expect(200) /* 201 */
+        .then(res => {
+          expect(res.body.article.votes).to.equal(voteCountPrePost - 1);
+          expect(res.body.article.title).to.equal(title);
+          expect(res.body.article.body).to.equal(body);
+          expect(res.body.article.belongs_to).to.equal(belongs_to);
+        });
+    });
+    it('returns 400 and msg if invalid articleId', () => {
+      return request
+        .put(`/api/articles/1?vote=up`)
+        .expect(400)
+        .then(res => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body.msg).to.equal('Invalid Article ID');
+        });
+    });
+  });
 });
 describe('#server', () => {
   it('complete final check and disconnect', () => {
