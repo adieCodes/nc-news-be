@@ -250,6 +250,30 @@ describe('API', () => {
         });
     });
   });
+  describe('GET /api/users/:username', () => {
+    it('returns 200 and user', () => {
+      const { username, name, avatar_url, _id } = usefulData.user;
+
+      return request
+        .get(`/api/users/${username}`)
+        .expect(200) /* 201 */
+        .then(res => {
+          expect(res.body.user.username).to.equal(username);
+          expect(res.body.user.name).to.equal(name);
+          expect(res.body.user.avatar_url).to.equal(avatar_url);
+          expect(res.body.user._id).to.equal(`${_id}`);
+        });
+    });
+    it('returns 404 and msg if invalid articleId', () => {
+      return request
+        .get(`/api/users/adie`)
+        .expect(404)
+        .then(res => {
+          expect(res.body.status).to.equal(404);
+          expect(res.body.msg).to.equal('Invalid username');
+        });
+    });
+  });
 });
 describe('#server', () => {
   it('complete final check and disconnect', () => {
