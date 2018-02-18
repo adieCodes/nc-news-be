@@ -38,4 +38,15 @@ const changeVoteCount = (req, res, next) => {
     });
 };
 
-module.exports = { getCommentsByArticleId, addCommentToArticle, changeVoteCount };
+const deleteComment = (req, res, next) => {
+  const { commentId } = req.params;
+
+  Comment.findByIdAndRemove(commentId)
+    .then(comment => res.status(200).send({ comment }))
+    .catch(err => {
+      if (err.name === 'CastError') return next({ status: 400, msg: 'Invalid Comment ID' });
+      return next(err);
+    });
+};
+
+module.exports = { getCommentsByArticleId, addCommentToArticle, changeVoteCount, deleteComment };
