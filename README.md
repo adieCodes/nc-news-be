@@ -10,7 +10,7 @@ I have followed TDD (Test Driven Development) best practises when building this 
 
 ### Prerequisites
 
-This applications uses Node v8.9.4 (Stable) and MongoDB v3.4.4. To verify you have each installed you will need to open a terminal window and run the following commands
+This application uses Node v8.9.4 (Stable) and MongoDB v3.4.4. To verify you have each installed you will need to open a terminal window and run the following commands
 
 ```
 $ which node
