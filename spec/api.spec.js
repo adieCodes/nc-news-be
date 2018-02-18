@@ -226,6 +226,30 @@ describe('API', () => {
         });
     });
   });
+  describe('DELETE /api/comments/:comment', () => {
+    it('returns 200, deletes comment and returns article', () => {
+      const { _id, votes, belongs_to, created_by, body } = usefulData.comments[0];
+
+      return request
+        .delete(`/api/comments/${_id}`)
+        .expect(200) /* 201 */
+        .then(res => {
+          expect(res.body.comment.votes).to.equal(votes);
+          expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
+          expect(res.body.comment.created_by).to.equal(created_by);
+          expect(res.body.comment.body).to.equal(body);
+        });
+    });
+    it('returns 400 and msg if invalid articleId', () => {
+      return request
+        .delete(`/api/comments/1`)
+        .expect(400)
+        .then(res => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body.msg).to.equal('Invalid Comment ID');
+        });
+    });
+  });
 });
 describe('#server', () => {
   it('complete final check and disconnect', () => {
