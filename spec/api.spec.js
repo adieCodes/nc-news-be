@@ -187,6 +187,45 @@ describe('API', () => {
         });
     });
   });
+  describe('PUT /api/comments/:comment', () => {
+    it('returns 200, increments vote and returns article', () => {
+      const { _id, belongs_to, created_by, body } = usefulData.comments[0];
+      const voteCountPrePost = usefulData.comments[0].votes;
+
+      return request
+        .put(`/api/comments/${_id}?vote=up`)
+        .expect(200) /* 201 */
+        .then(res => {
+          expect(res.body.comment.votes).to.equal(voteCountPrePost + 1);
+          expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
+          expect(res.body.comment.created_by).to.equal(created_by);
+          expect(res.body.comment.body).to.equal(body);
+        });
+    });
+    it('returns 200, decrements vote and returns article', () => {
+      const { _id, belongs_to, created_by, body } = usefulData.comments[0];
+      const voteCountPrePost = usefulData.comments[0].votes;
+
+      return request
+        .put(`/api/comments/${_id}?vote=down`)
+        .expect(200) /* 201 */
+        .then(res => {
+          expect(res.body.comment.votes).to.equal(voteCountPrePost - 1);
+          expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
+          expect(res.body.comment.created_by).to.equal(created_by);
+          expect(res.body.comment.body).to.equal(body);
+        });
+    });
+    it('returns 400 and msg if invalid articleId', () => {
+      return request
+        .put(`/api/comments/1?vote=up`)
+        .expect(400)
+        .then(res => {
+          expect(res.body.status).to.equal(400);
+          expect(res.body.msg).to.equal('Invalid Article ID');
+        });
+    });
+  });
 });
 describe('#server', () => {
   it('complete final check and disconnect', () => {
