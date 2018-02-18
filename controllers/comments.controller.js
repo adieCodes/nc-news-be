@@ -26,4 +26,16 @@ const addCommentToArticle = (req, res, next) => {
     });
 };
 
-module.exports = { getCommentsByArticleId, addCommentToArticle };
+const changeVoteCount = (req, res, next) => {
+  const { commentId } = req.params;
+  const changeVoteCountBy = req.query.vote === 'up' ? 1 : -1;
+
+  Comment.findByIdAndUpdate(commentId, { $inc: { votes: changeVoteCountBy } }, { new: true })
+    .then(comment => res.status(200).send({ comment }))
+    .catch(err => {
+      if (err.name === 'CastError') return next({ status: 400, msg: 'Invalid Article ID' });
+      return next(err);
+    });
+};
+
+module.exports = { getCommentsByArticleId, addCommentToArticle, changeVoteCount };
