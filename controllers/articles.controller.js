@@ -10,7 +10,7 @@ const getAllArticles = (req, res, next) => {
 const getTopicArticles = (req, res, next) => {
   const { topic } = req.params;
   Article.find({ belongs_to: topic })
-    .sort({ votes: 'desc', title: 'asc' })
+    .sort({ votes: 'desc', created_at: 'desc' })
     .then(articles => {
       if (articles.length === 0) return next({ status: 404, msg: 'No content' });
       return res.status(200).send({ articles });
