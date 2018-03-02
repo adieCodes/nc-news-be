@@ -52,7 +52,7 @@ describe('API', () => {
         .get(`/api/topics/football/articles`)
         .expect(200)
         .then(res => {
-          expect(res.body.articles.length).to.equal(1);
+          expect(res.body.articles.length).to.equal(3);
           expect(res.body.articles[0].title).to.be.a('string');
           expect(res.body.articles[0].body).to.be.a('string');
           expect(res.body.articles[0].votes).to.be.a('number');
@@ -65,6 +65,16 @@ describe('API', () => {
         .then(res => {
           expect(res.body.status).to.equal(404);
           expect(res.body.msg).to.equal('No content');
+        });
+    });
+    it('sorts articles by votes', () => {
+      return request
+        .get('/api/topics/football/articles')
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles[0].title).to.equal('Football is life');
+          expect(res.body.articles[1].title).to.equal('Football is fun');
+          expect(res.body.articles[2].title).to.equal('Football is awful');
         });
     });
   });
