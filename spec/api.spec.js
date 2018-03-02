@@ -35,6 +35,16 @@ describe('API', () => {
           expect(res.body.topics[0]._id).to.be.a('string');
         });
     });
+    it('sorts topics by title', () => {
+      return request
+        .get('/api/topics')
+        .expect(200)
+        .then(res => {
+          expect(res.body.topics[0].title).to.equal('Cats');
+          expect(res.body.topics[1].title).to.equal('Cooking');
+          expect(res.body.topics[2].title).to.equal('Football');
+        });
+    });
   });
   describe('GET /api/topics/:topid/articles', () => {
     it('returns 200 and all articles for matching topic', () => {
@@ -42,7 +52,7 @@ describe('API', () => {
         .get(`/api/topics/football/articles`)
         .expect(200)
         .then(res => {
-          expect(res.body.articles.length).to.equal(1);
+          expect(res.body.articles.length).to.equal(4);
           expect(res.body.articles[0].title).to.be.a('string');
           expect(res.body.articles[0].body).to.be.a('string');
           expect(res.body.articles[0].votes).to.be.a('number');
@@ -57,6 +67,17 @@ describe('API', () => {
           expect(res.body.msg).to.equal('No content');
         });
     });
+    it('sorts articles by votes and then time created', () => {
+      return request
+        .get('/api/topics/football/articles')
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles[0].title).to.equal('Football is life');
+          expect(res.body.articles[1].title).to.equal('Football is fun');
+          expect(res.body.articles[2].title).to.equal('Football is unavoidable');
+          expect(res.body.articles[3].title).to.equal('Football is awful');
+        });
+    });
   });
   describe('GET /api/articles', () => {
     it('returns 200 and all articles', () => {
@@ -69,6 +90,18 @@ describe('API', () => {
           expect(res.body.articles[0].body).to.be.a('string');
           expect(res.body.articles[0].belongs_to).to.be.a('string');
           expect(res.body.articles[0].votes).to.be.a('number');
+        });
+    });
+    it('sorts articles by votes and then time created', () => {
+      return request
+        .get('/api/articles')
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles[0].title).to.equal('Football is life');
+          expect(res.body.articles[1].title).to.equal('Cats are great');
+          expect(res.body.articles[2].title).to.equal('Football is fun');
+          expect(res.body.articles[3].title).to.equal('Football is unavoidable');
+          expect(res.body.articles[4].title).to.equal('Football is awful');
         });
     });
   });
@@ -118,6 +151,19 @@ describe('API', () => {
         .expect(400)
         .then(res => {
           expect(res.body.msg).to.equal('There are no comments for this article yet');
+        });
+    });
+    it('returns comments sorted by vote count and then time created', () => {
+      const articleId = usefulData.articles[0]._id;
+
+      return request
+        .get(`/api/articles/${articleId}/comments`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.comments[0].body).to.equal('this is a third comment');
+          expect(res.body.comments[1].body).to.equal('this is a comment');
+          expect(res.body.comments[2].body).to.equal('this is a forth comment');
+          expect(res.body.comments[3].body).to.equal('this is another comment');
         });
     });
   });

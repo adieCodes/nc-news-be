@@ -26,7 +26,10 @@ const saveTopics = () => {
 const saveArticles = () => {
   const articles = [
     { title: 'Cats are great', body: 'something', belongs_to: 'cats' },
-    { title: 'Football is fun', body: 'something', belongs_to: 'football' }
+    { title: 'Football is fun', body: 'something', belongs_to: 'football' },
+    { title: 'Football is life', body: 'something', belongs_to: 'football', votes: 100 },
+    { title: 'Football is awful', body: 'something', belongs_to: 'football', votes: -21 },
+    { title: 'Football is unavoidable', body: 'something', belongs_to: 'football' }
   ].map(article => new Article(article).save());
 
   return Promise.all(articles);
@@ -34,8 +37,28 @@ const saveArticles = () => {
 
 const saveComments = articles => {
   const comments = [
-    { body: 'this is a comment', belongs_to: articles[0]._id, created_by: 'northcoder' },
-    { body: 'this is another comment', belongs_to: articles[0]._id, created_by: 'northcoder' }
+    {
+      body: 'this is a comment',
+      belongs_to: articles[0]._id,
+      created_by: 'northcoder'
+    },
+    {
+      body: 'this is another comment',
+      belongs_to: articles[0]._id,
+      created_by: 'northcoder',
+      votes: -73
+    },
+    {
+      body: 'this is a third comment',
+      belongs_to: articles[0]._id,
+      created_by: 'northcoder',
+      votes: 10000
+    },
+    {
+      body: 'this is a forth comment',
+      belongs_to: articles[0]._id,
+      created_by: 'northcoder'
+    }
   ].map(comment => new Comment(comment).save());
 
   return Promise.all(comments);
