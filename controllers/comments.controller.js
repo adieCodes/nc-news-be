@@ -4,6 +4,7 @@ const getCommentsByArticleId = (req, res, next) => {
   const { articleId } = req.params;
 
   Comment.find({ belongs_to: articleId })
+    .sort({ votes: 'desc', created_at: 'desc' })
     .then(comments => res.status(200).send({ comments }))
     .catch(err => {
       if (err.name === 'CastError')
