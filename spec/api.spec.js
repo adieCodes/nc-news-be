@@ -274,6 +274,28 @@ describe('API', () => {
         });
     });
   });
+  describe('unexpected routes get 404', () => {
+    it('returns 404 for /stuff', () => {
+      const url = '/stuff';
+      return request
+        .get(url)
+        .expect(404)
+        .then(res => {
+          expect(res.body.status).to.equal(404);
+          expect(res.body.msg).to.equal(`${url} is not a valid path`);
+        });
+    });
+    it('returns 404 for /api/allThings', () => {
+      const url = '/api/allThings';
+      return request
+        .get(url)
+        .expect(404)
+        .then(res => {
+          expect(res.body.status).to.equal(404);
+          expect(res.body.msg).to.equal(`${url} is not a valid path`);
+        });
+    });
+  });
 });
 describe('#server', () => {
   it('complete final check and disconnect', () => {
