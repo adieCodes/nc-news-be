@@ -91,7 +91,7 @@ describe('API', () => {
           expect(res.body.articles[0].votes).to.be.a('number');
         });
     });
-    it('sorts articles by votes', () => {
+    it('sorts articles by votes and then time created', () => {
       return request
         .get('/api/articles')
         .expect(200)
