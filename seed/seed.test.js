@@ -28,7 +28,8 @@ const saveArticles = () => {
     { title: 'Cats are great', body: 'something', belongs_to: 'cats' },
     { title: 'Football is fun', body: 'something', belongs_to: 'football' },
     { title: 'Football is life', body: 'something', belongs_to: 'football', votes: 100 },
-    { title: 'Football is awful', body: 'something', belongs_to: 'football', votes: -21 }
+    { title: 'Football is awful', body: 'something', belongs_to: 'football', votes: -21 },
+    { title: 'Football is unavoidable', body: 'something', belongs_to: 'football' }
   ].map(article => new Article(article).save());
 
   return Promise.all(articles);
