@@ -52,7 +52,7 @@ describe('API', () => {
         .get(`/api/topics/football/articles`)
         .expect(200)
         .then(res => {
-          expect(res.body.articles.length).to.equal(3);
+          expect(res.body.articles.length).to.equal(4);
           expect(res.body.articles[0].title).to.be.a('string');
           expect(res.body.articles[0].body).to.be.a('string');
           expect(res.body.articles[0].votes).to.be.a('number');
@@ -67,14 +67,15 @@ describe('API', () => {
           expect(res.body.msg).to.equal('No content');
         });
     });
-    it('sorts articles by votes', () => {
+    it('sorts articles by votes and then time created', () => {
       return request
         .get('/api/topics/football/articles')
         .expect(200)
         .then(res => {
           expect(res.body.articles[0].title).to.equal('Football is life');
           expect(res.body.articles[1].title).to.equal('Football is fun');
-          expect(res.body.articles[2].title).to.equal('Football is awful');
+          expect(res.body.articles[2].title).to.equal('Football is unavoidable');
+          expect(res.body.articles[3].title).to.equal('Football is awful');
         });
     });
   });
@@ -99,7 +100,8 @@ describe('API', () => {
           expect(res.body.articles[0].title).to.equal('Football is life');
           expect(res.body.articles[1].title).to.equal('Cats are great');
           expect(res.body.articles[2].title).to.equal('Football is fun');
-          expect(res.body.articles[3].title).to.equal('Football is awful');
+          expect(res.body.articles[3].title).to.equal('Football is unavoidable');
+          expect(res.body.articles[4].title).to.equal('Football is awful');
         });
     });
   });
