@@ -91,6 +91,17 @@ describe('API', () => {
           expect(res.body.articles[0].votes).to.be.a('number');
         });
     });
+    it('sorts articles by votes', () => {
+      return request
+        .get('/api/articles')
+        .expect(200)
+        .then(res => {
+          expect(res.body.articles[0].title).to.equal('Football is life');
+          expect(res.body.articles[1].title).to.equal('Cats are great');
+          expect(res.body.articles[2].title).to.equal('Football is fun');
+          expect(res.body.articles[3].title).to.equal('Football is awful');
+        });
+    });
   });
   describe('GET /api/articles/:articleId', () => {
     it('returns 200 and relevant article', () => {
