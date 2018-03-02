@@ -151,6 +151,19 @@ describe('API', () => {
           expect(res.body.msg).to.equal('There are no comments for this article yet');
         });
     });
+    it('returns comments sorted by vote count and then time created', () => {
+      const articleId = usefulData.articles[0]._id;
+
+      return request
+        .get(`/api/articles/${articleId}/comments`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.comments[0].body).to.equal('this is a third comment');
+          expect(res.body.comments[1].body).to.equal('this is a comment');
+          expect(res.body.comments[2].body).to.equal('this is a forth comment');
+          expect(res.body.comments[3].body).to.equal('this is another comment');
+        });
+    });
   });
   describe('POST /api/articles/:articleId/comments', () => {
     const commentContent = 'This is a test comment';
