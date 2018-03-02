@@ -2,6 +2,7 @@ const { Article } = require('../models');
 
 const getAllArticles = (req, res, next) => {
   Article.find()
+    .sort({ votes: 'desc' })
     .then(articles => res.status(200).send({ articles }))
     .catch(next);
 };
