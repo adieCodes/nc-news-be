@@ -26,6 +26,9 @@ app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.status(200).send({ msg: `Server running on port ${PORT}` }));
 app.use('/api', apiRouter);
+app.get('*', (req, res, next) => {
+  next({ status: 404, msg: `${req.url} is not a valid path` });
+});
 
 app.use((err, req, res, next) => {
   if (err.status === 400) return res.status(400).send(err);
