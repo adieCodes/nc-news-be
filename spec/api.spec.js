@@ -35,6 +35,16 @@ describe('API', () => {
           expect(res.body.topics[0]._id).to.be.a('string');
         });
     });
+    it('sorts topics by title', () => {
+      return request
+        .get('/api/topics')
+        .expect(200)
+        .then(res => {
+          expect(res.body.topics[0].title).to.equal('Cats');
+          expect(res.body.topics[1].title).to.equal('Cooking');
+          expect(res.body.topics[2].title).to.equal('Football');
+        });
+    });
   });
   describe('GET /api/topics/:topid/articles', () => {
     it('returns 200 and all articles for matching topic', () => {
