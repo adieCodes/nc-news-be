@@ -12,7 +12,8 @@ const getTopicArticles = (req, res, next) => {
   Article.find({ belongs_to: topic })
     .sort({ votes: 'desc', created_at: 'desc' })
     .then(articles => {
-      if (articles.length === 0) return next({ status: 404, msg: 'No content' });
+      if (articles.length === 0)
+        return next({ status: 404, msg: `No content for the ${topic} topic` });
       return res.status(200).send({ articles });
     })
     .catch(next);
@@ -23,7 +24,8 @@ const getArticleById = (req, res, next) => {
   Article.findById(articleId)
     .then(article => res.status(200).send({ article }))
     .catch(err => {
-      if (err.name === 'CastError') return next({ status: 400, msg: 'Invalid Id' });
+      if (err.name === 'CastError')
+        return next({ status: 400, msg: `There is no article with the id ${articleId}` });
       return next({ err });
     });
 };
@@ -35,7 +37,8 @@ const changeVoteCount = (req, res, next) => {
   Article.findByIdAndUpdate(articleId, { $inc: { votes: changeVoteCountBy } }, { new: true })
     .then(article => res.status(200).send({ article }))
     .catch(err => {
-      if (err.name === 'CastError') return next({ status: 400, msg: 'Invalid Article ID' });
+      if (err.name === 'CastError')
+        return next({ status: 400, msg: `There is no article with the id ${articleId}` });
       return next(err);
     });
 };

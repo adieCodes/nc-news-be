@@ -6,12 +6,15 @@ const getCommentsByArticleId = (req, res, next) => {
   Comment.find({ belongs_to: articleId })
     .sort({ votes: 'desc', created_at: 'desc' })
     .then(comments => {
-      if (!comments.length) next({ status: 404, msg: 'This article has no comments' });
+      if (!comments.length) next({ status: 404, msg: `Article id ${articleId} has no comments` });
       res.status(200).send({ comments });
     })
     .catch(err => {
       if (err.name === 'CastError')
-        return next({ status: 400, msg: 'There are no comments for this article yet' });
+        return next({
+          status: 400,
+          msg: `There are no comments for the article with id ${articleId} yet`
+        });
       return next(err);
     });
 };
@@ -25,7 +28,8 @@ const addCommentToArticle = (req, res, next) => {
     .then(() => Comment.find({ belongs_to: articleId }))
     .then(comments => res.status(201).send({ comments }))
     .catch(err => {
-      if (err.name === 'ValidationError') return next({ status: 400, msg: 'Invalid article Id' });
+      if (err.name === 'ValidationError')
+        return next({ status: 400, msg: `There is no article with the id ${articleId}` });
       return next({ err });
     });
 };
@@ -37,7 +41,8 @@ const changeVoteCount = (req, res, next) => {
   Comment.findByIdAndUpdate(commentId, { $inc: { votes: changeVoteCountBy } }, { new: true })
     .then(comment => res.status(200).send({ comment }))
     .catch(err => {
-      if (err.name === 'CastError') return next({ status: 400, msg: 'Invalid Article ID' });
+      if (err.name === 'CastError')
+        return next({ status: 400, msg: `There is no comment with the id ${commentId}` });
       return next(err);
     });
 };
@@ -48,7 +53,8 @@ const deleteComment = (req, res, next) => {
   Comment.findByIdAndRemove(commentId)
     .then(comment => res.status(200).send({ comment }))
     .catch(err => {
-      if (err.name === 'CastError') return next({ status: 400, msg: 'Invalid Comment ID' });
+      if (err.name === 'CastError')
+        return next({ status: 400, msg: `There is no comment with the id ${commentId}` });
       return next(err);
     });
 };

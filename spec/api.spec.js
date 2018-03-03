@@ -63,12 +63,14 @@ describe('API', () => {
         });
     });
     it('returns 404 for invalid topic', () => {
+      const topic = 'tennis';
+
       return request
-        .get(`/api/topics/tennis/articles`)
+        .get(`/api/topics/${topic}/articles`)
         .expect(404)
         .then(res => {
           expect(res.body.status).to.equal(404);
-          expect(res.body.msg).to.equal('No content');
+          expect(res.body.msg).to.equal(`No content for the ${topic} topic`);
         });
     });
     it('sorts articles by votes and then time created', () => {
@@ -124,12 +126,14 @@ describe('API', () => {
         });
     });
     it('returns 400 if invalid articleId', () => {
+      const articleId = 1;
+
       return request
-        .get('/api/articles/1')
+        .get(`/api/articles/${articleId}`)
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid Id');
+          expect(res.body.msg).to.equal(`There is no article with the id ${articleId}`);
         });
     });
   });
@@ -157,15 +161,19 @@ describe('API', () => {
         .expect(404)
         .then(res => {
           expect(res.body.status).to.equal(404);
-          expect(res.body.msg).to.equal('This article has no comments');
+          expect(res.body.msg).to.equal(`Article id ${articleId} has no comments`);
         });
     });
     it('returns 400 if invalid articleId', () => {
+      const articleId = 1;
+
       return request
-        .get('/api/articles/1/comments')
+        .get(`/api/articles/${articleId}/comments`)
         .expect(400)
         .then(res => {
-          expect(res.body.msg).to.equal('There are no comments for this article yet');
+          expect(res.body.msg).to.equal(
+            `There are no comments for the article with id ${articleId} yet`
+          );
         });
     });
     it('returns comments sorted by vote count and then time created', () => {
@@ -199,13 +207,15 @@ describe('API', () => {
         });
     });
     it('returns 400 and msg if invalid articleId', () => {
+      const articleId = 1;
+
       return request
-        .post('/api/articles/1/comments')
+        .post(`/api/articles/${articleId}/comments`)
         .send({ comment: commentContent })
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid article Id');
+          expect(res.body.msg).to.equal(`There is no article with the id ${articleId}`);
         });
     });
   });
@@ -239,12 +249,14 @@ describe('API', () => {
         });
     });
     it('returns 400 and msg if invalid articleId', () => {
+      const articleId = 1;
+
       return request
-        .put(`/api/articles/1?vote=up`)
+        .put(`/api/articles/${articleId}?vote=up`)
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid Article ID');
+          expect(res.body.msg).to.equal(`There is no article with the id ${articleId}`);
         });
     });
   });
@@ -278,12 +290,14 @@ describe('API', () => {
         });
     });
     it('returns 400 and msg if invalid articleId', () => {
+      const commentId = 1;
+
       return request
-        .put(`/api/comments/1?vote=up`)
+        .put(`/api/comments/${commentId}?vote=up`)
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid Article ID');
+          expect(res.body.msg).to.equal(`There is no comment with the id ${commentId}`);
         });
     });
   });
@@ -302,12 +316,14 @@ describe('API', () => {
         });
     });
     it('returns 400 and msg if invalid articleId', () => {
+      const commentId = 1;
+
       return request
-        .delete(`/api/comments/1`)
+        .delete(`/api/comments/${commentId}`)
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid Comment ID');
+          expect(res.body.msg).to.equal(`There is no comment with the id ${commentId}`);
         });
     });
   });
