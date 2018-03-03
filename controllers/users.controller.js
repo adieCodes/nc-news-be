@@ -5,7 +5,7 @@ const getUser = (req, res, next) => {
 
   User.findOne({ username })
     .then(user => {
-      if (!user) return next({ status: 404, msg: 'Invalid username' });
+      if (!user) return next({ status: 400, msg: `No-one is using the username ${username}` });
       return res.status(200).send({ user });
     })
     .catch(next);
