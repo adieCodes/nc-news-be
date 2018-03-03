@@ -1,4 +1,4 @@
-/* eslint-disable no-underscore-dangle, arrow-body-style, camelcase */
+/* eslint-disable no-underscore-dangle, arrow-body-style, camelcase, no-console */
 
 process.env.NODE_ENV = 'test';
 
