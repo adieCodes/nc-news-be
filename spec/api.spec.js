@@ -321,13 +321,15 @@ describe('API', () => {
           expect(res.body.user._id).to.equal(`${_id}`);
         });
     });
-    it('returns 404 and msg if invalid articleId', () => {
+    it('returns 400 and msg if invalid articleId', () => {
+      const username = 'adie';
+
       return request
-        .get(`/api/users/adie`)
-        .expect(404)
+        .get(`/api/users/${username}`)
+        .expect(400)
         .then(res => {
-          expect(res.body.status).to.equal(404);
-          expect(res.body.msg).to.equal('Invalid username');
+          expect(res.body.status).to.equal(400);
+          expect(res.body.msg).to.equal(`No-one is using the username ${username}`);
         });
     });
   });
