@@ -10,7 +10,7 @@ I have followed TDD (Test Driven Development) best practises when building this 
 
 ### Prerequisites
 
-This applications uses Node v8.9.4 (Stable) and MongoDB v3.4.4. To verify you have each installed you will need to open a terminal window and run the following commands
+This application uses Node v8.9.4 (Stable) and MongoDB v3.4.4. To verify you have each installed you will need to open a terminal window and run the following commands
 
 ```
 $ which node
@@ -59,7 +59,7 @@ Each of the applications endpoints, with both successful and unsuccessful reques
 Build steps are included to ensure:
 
 1. code meets [Airbnb's JavaScript style guide](https://github.com/airbnb/javascript)
-2. tests are passed before code is committed to git.
+2. tests are passed before code is committed to git
 
 ## Built With
 
@@ -74,4 +74,4 @@ The `config` file has been commited to allow local deployment and testing, under
 
 ## Acknowledgments
 
-Everyone at [Northcoders](https://northcoders.com/) for their outstanding curriculum and support. They pushed me and give me the knowledge and confidence to build a career in Software Development.
+Everyone at [Northcoders](https://northcoders.com/) for their outstanding curriculum and support. They gave me the knowledge and confidence to build a career in Software Development.
