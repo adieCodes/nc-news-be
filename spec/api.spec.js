@@ -3,7 +3,7 @@
 process.env.NODE_ENV = 'test';
 
 const app = require('../server');
-const { describe, it, beforeEach } = require('mocha');
+const { after, describe, it, beforeEach } = require('mocha');
 const { expect } = require('chai');
 const mongoose = require('mongoose');
 const supertest = require('supertest');
@@ -21,6 +21,10 @@ describe('API', () => {
         usefulData = data;
       })
       .catch(console.log);
+  });
+
+  after(() => {
+    mongoose.disconnect();
   });
 
   describe('GET /api/topics', () => {
@@ -354,16 +358,5 @@ describe('API', () => {
           expect(res.body.msg).to.equal(`${url} is not a valid path`);
         });
     });
-  });
-});
-describe('#server', () => {
-  it('complete final check and disconnect', () => {
-    return request
-      .get('/')
-      .expect(200)
-      .then(res => {
-        expect(res.body.msg).to.be.equal('Server running on port 3090');
-        mongoose.disconnect();
-      });
   });
 });
