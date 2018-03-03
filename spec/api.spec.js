@@ -201,7 +201,7 @@ describe('API', () => {
 
       return request
         .put(`/api/articles/${_id}?vote=up`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.article.votes).to.equal(voteCountPrePost + 1);
           expect(res.body.article.title).to.equal(title);
@@ -215,7 +215,7 @@ describe('API', () => {
 
       return request
         .put(`/api/articles/${_id}?vote=down`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.article.votes).to.equal(voteCountPrePost - 1);
           expect(res.body.article.title).to.equal(title);
