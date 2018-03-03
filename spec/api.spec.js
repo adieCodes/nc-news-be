@@ -46,7 +46,7 @@ describe('API', () => {
         });
     });
   });
-  describe('GET /api/topics/:topid/articles', () => {
+  describe('GET /api/topics/:topic/articles', () => {
     it('returns 200 and all articles for matching topic', () => {
       return request
         .get(`/api/topics/football/articles`)
