@@ -183,7 +183,7 @@ describe('API', () => {
           expect(res.body.comments[0].belongs_to).to.equal(`${articleId}`);
         });
     });
-    it('returns 400 and msg if no comments', () => {
+    it('returns 400 and msg if invalid articleId', () => {
       return request
         .post('/api/articles/1/comments')
         .send({ comment: commentContent })
