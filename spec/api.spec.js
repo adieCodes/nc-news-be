@@ -240,7 +240,7 @@ describe('API', () => {
 
       return request
         .put(`/api/comments/${_id}?vote=up`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.comment.votes).to.equal(voteCountPrePost + 1);
           expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
@@ -254,7 +254,7 @@ describe('API', () => {
 
       return request
         .put(`/api/comments/${_id}?vote=down`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.comment.votes).to.equal(voteCountPrePost - 1);
           expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
@@ -278,7 +278,7 @@ describe('API', () => {
 
       return request
         .delete(`/api/comments/${_id}`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.comment.votes).to.equal(votes);
           expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
@@ -302,7 +302,7 @@ describe('API', () => {
 
       return request
         .get(`/api/users/${username}`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.user.username).to.equal(username);
           expect(res.body.user.name).to.equal(name);
