@@ -244,7 +244,7 @@ describe('API', () => {
         });
     });
   });
-  describe('PUT /api/comments/:comment', () => {
+  describe('PUT /api/comments/:commentId', () => {
     it('returns 200, increments vote and returns article', () => {
       const { _id, belongs_to, created_by, body } = usefulData.comments[0];
       const voteCountPrePost = usefulData.comments[0].votes;
