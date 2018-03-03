@@ -39,7 +39,7 @@ const changeVoteCount = (req, res, next) => {
     .catch(err => {
       if (err.name === 'CastError')
         return next({ status: 400, msg: `There is no article with the id ${articleId}` });
-      return next(err);
+      return next({ err });
     });
 };
 
