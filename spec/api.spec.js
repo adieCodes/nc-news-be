@@ -176,7 +176,7 @@ describe('API', () => {
       return request
         .post(`/api/articles/${articleId}/comments`)
         .send({ comment: commentContent })
-        .expect(201) /* 201 */
+        .expect(201)
         .then(res => {
           expect(res.body.comments.length).to.equal(commentCountPrePost + 1);
           expect(res.body.comments[commentCountPrePost].body).to.equal(commentContent);
