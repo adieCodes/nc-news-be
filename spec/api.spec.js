@@ -145,7 +145,7 @@ describe('API', () => {
           expect(res.body.comments[0].created_by).to.be.a('string');
         });
     });
-    it('returns 404 and msg if no comments', () => {
+    it('returns 400 if invalid articleId', () => {
       return request
         .get('/api/articles/1/comments')
         .expect(400)
