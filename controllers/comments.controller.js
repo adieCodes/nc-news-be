@@ -15,7 +15,7 @@ const getCommentsByArticleId = (req, res, next) => {
           status: 400,
           msg: `There are no comments for the article with id ${articleId} yet`
         });
-      return next(err);
+      return next({ err });
     });
 };
 
@@ -43,7 +43,7 @@ const changeVoteCount = (req, res, next) => {
     .catch(err => {
       if (err.name === 'CastError')
         return next({ status: 400, msg: `There is no comment with the id ${commentId}` });
-      return next(err);
+      return next({ err });
     });
 };
 
@@ -55,7 +55,7 @@ const deleteComment = (req, res, next) => {
     .catch(err => {
       if (err.name === 'CastError')
         return next({ status: 400, msg: `There is no comment with the id ${commentId}` });
-      return next(err);
+      return next({ err });
     });
 };
 
