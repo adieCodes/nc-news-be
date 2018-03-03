@@ -1,9 +1,9 @@
-/* eslint-disable no-underscore-dangle, arrow-body-style, camelcase */
+/* eslint-disable no-underscore-dangle, arrow-body-style, camelcase, no-console */
 
 process.env.NODE_ENV = 'test';
 
 const app = require('../server');
-const { describe, it, beforeEach } = require('mocha');
+const { after, describe, it, beforeEach } = require('mocha');
 const { expect } = require('chai');
 const mongoose = require('mongoose');
 const supertest = require('supertest');
@@ -21,6 +21,10 @@ describe('API', () => {
         usefulData = data;
       })
       .catch(console.log);
+  });
+
+  after(() => {
+    mongoose.disconnect();
   });
 
   describe('GET /api/topics', () => {
@@ -46,7 +50,7 @@ describe('API', () => {
         });
     });
   });
-  describe('GET /api/topics/:topid/articles', () => {
+  describe('GET /api/topics/:topic/articles', () => {
     it('returns 200 and all articles for matching topic', () => {
       return request
         .get(`/api/topics/football/articles`)
@@ -59,12 +63,14 @@ describe('API', () => {
         });
     });
     it('returns 404 for invalid topic', () => {
+      const topic = 'tennis';
+
       return request
-        .get(`/api/topics/tennis/articles`)
+        .get(`/api/topics/${topic}/articles`)
         .expect(404)
         .then(res => {
           expect(res.body.status).to.equal(404);
-          expect(res.body.msg).to.equal('No content');
+          expect(res.body.msg).to.equal(`No content for the ${topic} topic`);
         });
     });
     it('sorts articles by votes and then time created', () => {
@@ -120,12 +126,14 @@ describe('API', () => {
         });
     });
     it('returns 400 if invalid articleId', () => {
+      const articleId = 1;
+
       return request
-        .get('/api/articles/1')
+        .get(`/api/articles/${articleId}`)
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid Id');
+          expect(res.body.msg).to.equal(`There is no article with the id ${articleId}`);
         });
     });
   });
@@ -145,12 +153,27 @@ describe('API', () => {
           expect(res.body.comments[0].created_by).to.be.a('string');
         });
     });
-    it('returns 404 and msg if no comments', () => {
+    it('returns 404 when article has no comments', () => {
+      const articleId = usefulData.articles[1]._id;
+
       return request
-        .get('/api/articles/1/comments')
+        .get(`/api/articles/${articleId}/comments`)
+        .expect(404)
+        .then(res => {
+          expect(res.body.status).to.equal(404);
+          expect(res.body.msg).to.equal(`Article id ${articleId} has no comments`);
+        });
+    });
+    it('returns 400 if invalid articleId', () => {
+      const articleId = 1;
+
+      return request
+        .get(`/api/articles/${articleId}/comments`)
         .expect(400)
         .then(res => {
-          expect(res.body.msg).to.equal('There are no comments for this article yet');
+          expect(res.body.msg).to.equal(
+            `There are no comments for the article with id ${articleId} yet`
+          );
         });
     });
     it('returns comments sorted by vote count and then time created', () => {
@@ -176,21 +199,23 @@ describe('API', () => {
       return request
         .post(`/api/articles/${articleId}/comments`)
         .send({ comment: commentContent })
-        .expect(201) /* 201 */
+        .expect(201)
         .then(res => {
           expect(res.body.comments.length).to.equal(commentCountPrePost + 1);
           expect(res.body.comments[commentCountPrePost].body).to.equal(commentContent);
           expect(res.body.comments[0].belongs_to).to.equal(`${articleId}`);
         });
     });
-    it('returns 400 and msg if no comments', () => {
+    it('returns 400 and msg if invalid articleId', () => {
+      const articleId = 1;
+
       return request
-        .post('/api/articles/1/comments')
+        .post(`/api/articles/${articleId}/comments`)
         .send({ comment: commentContent })
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid article Id');
+          expect(res.body.msg).to.equal(`There is no article with the id ${articleId}`);
         });
     });
   });
@@ -201,7 +226,7 @@ describe('API', () => {
 
       return request
         .put(`/api/articles/${_id}?vote=up`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.article.votes).to.equal(voteCountPrePost + 1);
           expect(res.body.article.title).to.equal(title);
@@ -215,7 +240,7 @@ describe('API', () => {
 
       return request
         .put(`/api/articles/${_id}?vote=down`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.article.votes).to.equal(voteCountPrePost - 1);
           expect(res.body.article.title).to.equal(title);
@@ -224,23 +249,25 @@ describe('API', () => {
         });
     });
     it('returns 400 and msg if invalid articleId', () => {
+      const articleId = 1;
+
       return request
-        .put(`/api/articles/1?vote=up`)
+        .put(`/api/articles/${articleId}?vote=up`)
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid Article ID');
+          expect(res.body.msg).to.equal(`There is no article with the id ${articleId}`);
         });
     });
   });
-  describe('PUT /api/comments/:comment', () => {
+  describe('PUT /api/comments/:commentId', () => {
     it('returns 200, increments vote and returns article', () => {
       const { _id, belongs_to, created_by, body } = usefulData.comments[0];
       const voteCountPrePost = usefulData.comments[0].votes;
 
       return request
         .put(`/api/comments/${_id}?vote=up`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.comment.votes).to.equal(voteCountPrePost + 1);
           expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
@@ -254,7 +281,7 @@ describe('API', () => {
 
       return request
         .put(`/api/comments/${_id}?vote=down`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.comment.votes).to.equal(voteCountPrePost - 1);
           expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
@@ -263,22 +290,24 @@ describe('API', () => {
         });
     });
     it('returns 400 and msg if invalid articleId', () => {
+      const commentId = 1;
+
       return request
-        .put(`/api/comments/1?vote=up`)
+        .put(`/api/comments/${commentId}?vote=up`)
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid Article ID');
+          expect(res.body.msg).to.equal(`There is no comment with the id ${commentId}`);
         });
     });
   });
-  describe('DELETE /api/comments/:comment', () => {
+  describe('DELETE /api/comments/:commentId', () => {
     it('returns 200, deletes comment and returns article', () => {
       const { _id, votes, belongs_to, created_by, body } = usefulData.comments[0];
 
       return request
         .delete(`/api/comments/${_id}`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.comment.votes).to.equal(votes);
           expect(res.body.comment.belongs_to).to.equal(`${belongs_to}`);
@@ -287,12 +316,14 @@ describe('API', () => {
         });
     });
     it('returns 400 and msg if invalid articleId', () => {
+      const commentId = 1;
+
       return request
-        .delete(`/api/comments/1`)
+        .delete(`/api/comments/${commentId}`)
         .expect(400)
         .then(res => {
           expect(res.body.status).to.equal(400);
-          expect(res.body.msg).to.equal('Invalid Comment ID');
+          expect(res.body.msg).to.equal(`There is no comment with the id ${commentId}`);
         });
     });
   });
@@ -302,7 +333,7 @@ describe('API', () => {
 
       return request
         .get(`/api/users/${username}`)
-        .expect(200) /* 201 */
+        .expect(200)
         .then(res => {
           expect(res.body.user.username).to.equal(username);
           expect(res.body.user.name).to.equal(name);
@@ -310,13 +341,15 @@ describe('API', () => {
           expect(res.body.user._id).to.equal(`${_id}`);
         });
     });
-    it('returns 404 and msg if invalid articleId', () => {
+    it('returns 400 and msg if invalid articleId', () => {
+      const username = 'adie';
+
       return request
-        .get(`/api/users/adie`)
-        .expect(404)
+        .get(`/api/users/${username}`)
+        .expect(400)
         .then(res => {
-          expect(res.body.status).to.equal(404);
-          expect(res.body.msg).to.equal('Invalid username');
+          expect(res.body.status).to.equal(400);
+          expect(res.body.msg).to.equal(`No-one is using the username ${username}`);
         });
     });
   });
@@ -341,16 +374,5 @@ describe('API', () => {
           expect(res.body.msg).to.equal(`${url} is not a valid path`);
         });
     });
-  });
-});
-describe('#server', () => {
-  it('complete final check and disconnect', () => {
-    return request
-      .get('/')
-      .expect(200)
-      .then(res => {
-        expect(res.body.msg).to.be.equal('Server running on port 3090');
-        mongoose.disconnect();
-      });
   });
 });
