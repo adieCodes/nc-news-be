@@ -145,6 +145,17 @@ describe('API', () => {
           expect(res.body.comments[0].created_by).to.be.a('string');
         });
     });
+    it('returns 404 when article has no comments', () => {
+      const articleId = usefulData.articles[1]._id;
+
+      return request
+        .get(`/api/articles/${articleId}/comments`)
+        .expect(404)
+        .then(res => {
+          expect(res.body.status).to.equal(404);
+          expect(res.body.msg).to.equal('This article has no comments');
+        });
+    });
     it('returns 400 if invalid articleId', () => {
       return request
         .get('/api/articles/1/comments')
