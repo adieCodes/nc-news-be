@@ -5,7 +5,10 @@ const getCommentsByArticleId = (req, res, next) => {
 
   Comment.find({ belongs_to: articleId })
     .sort({ votes: 'desc', created_at: 'desc' })
-    .then(comments => res.status(200).send({ comments }))
+    .then(comments => {
+      if (!comments.length) next({ status: 404, msg: 'This article has no comments' });
+      res.status(200).send({ comments });
+    })
     .catch(err => {
       if (err.name === 'CastError')
         return next({ status: 400, msg: 'There are no comments for this article yet' });
