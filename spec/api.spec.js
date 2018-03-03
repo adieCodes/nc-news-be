@@ -283,7 +283,7 @@ describe('API', () => {
         });
     });
   });
-  describe('DELETE /api/comments/:comment', () => {
+  describe('DELETE /api/comments/:commentId', () => {
     it('returns 200, deletes comment and returns article', () => {
       const { _id, votes, belongs_to, created_by, body } = usefulData.comments[0];
 
