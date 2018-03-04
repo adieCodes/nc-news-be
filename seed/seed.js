@@ -1,5 +1,7 @@
 /* eslint-disable consistent-return, no-underscore-dangle, no-console */
 
+if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
+
 const { Article, Comment, Topic, User } = require('../models');
 const userData = require('./data/user_data');
 const articleData = require('./data/articles');
@@ -9,7 +11,7 @@ const async = require('async');
 const mongoose = require('mongoose');
 const log4js = require('log4js');
 const moment = require('moment');
-const DB = require('../config').DB.dev;
+const DB = require('../config').DB[process.env.NODE_ENV];
 
 const logger = log4js.getLogger();
 const chance = new Chance();
