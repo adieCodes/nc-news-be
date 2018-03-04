@@ -5,6 +5,7 @@ if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const morgan = require('morgan');
 const cors = require('cors');
 const config = require('./config');
 const apiRouter = require('./routes');
@@ -21,6 +22,7 @@ mongoose
 
 const app = express();
 
+app.use(morgan('dev'));
 app.use(cors());
 app.use(bodyParser.json());
 
