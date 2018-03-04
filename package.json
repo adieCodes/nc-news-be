@@ -7,8 +7,11 @@
     "lint": "eslint '**/*.js' --quiet/",
     "format": "prettier --write '**/*.js'",
     "precommit": "lint-staged && npm test",
-    "dev": "nodemon index.js",
-    "test": "mocha ./spec"
+    "start": "NODE_ENV=production node ./index.js",
+    "dev": "NODE_ENV=dev nodemon index.js",
+    "test": "mocha ./spec",
+    "seed:dev": "NODE_ENV=dev node seed/seed.js",
+    "seed:production": "NODE_ENV=production node seed/seed.js"
   },
   "lint-staged": {
     "*.{js,json}": ["prettier --write", "git add"]
@@ -20,12 +23,18 @@
   },
   "license": "ISC",
   "dependencies": {
+    "async": "^2.6.0",
     "body-parser": "^1.18.2",
+    "chance": "^1.0.13",
     "cors": "^2.8.4",
     "express": "^4.16.2",
+    "log4js": "^2.5.3",
+    "moment": "^2.20.1",
     "mongodb": "^3.0.2",
     "mongoose": "^5.0.6",
-    "nodemon": "^1.15.0"
+    "morgan": "^1.9.0",
+    "nodemon": "^1.15.0",
+    "underscore": "^1.8.3"
   },
   "devDependencies": {
     "chai": "^4.1.2",

@@ -1,6 +1,9 @@
-const app = require('./server');
+/* eslint-disable no-console */
 
-const PORT = require('./config').PORT[process.env.NODE_ENV];
+const app = require('./server');
+const config = require('./config');
+
+const PORT = config.PORT[process.env.NODE_ENV] || process.env.PORT;
 
 app.listen(PORT, err => {
   if (err) console.log(err);
