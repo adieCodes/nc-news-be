@@ -8,10 +8,10 @@
     "format": "prettier --write '**/*.js'",
     "precommit": "lint-staged && npm test",
     "start": "NODE_ENV=production node ./index.js",
-    "dev": "NODE_ENV='dev' nodemon index.js",
+    "dev": "NODE_ENV=dev nodemon index.js",
     "test": "mocha ./spec",
-    "seed:dev": "NODE_ENV='dev' node seed/seed.js",
-    "seed:production": "NODE_ENV='production node seed/seed.js"
+    "seed:dev": "NODE_ENV=dev node seed/seed.js",
+    "seed:production": "NODE_ENV=production node seed/seed.js"
   },
   "lint-staged": {
     "*.{js,json}": ["prettier --write", "git add"]
