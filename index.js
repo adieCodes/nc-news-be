@@ -1,6 +1,6 @@
 const app = require('./server');
 
-const PORT = require('./config').PORT[process.env.NODE_ENV];
+const { PORT } = process.env;
 
 app.listen(PORT, err => {
   if (err) console.log(err);

@@ -9,7 +9,7 @@ const cors = require('cors');
 const config = require('./config');
 const apiRouter = require('./routes');
 
-const PORT = config.PORT[process.env.NODE_ENV];
+const { PORT } = process.env;
 const DB = config.DB[process.env.NODE_ENV];
 
 mongoose.Promise = global.Promise;
