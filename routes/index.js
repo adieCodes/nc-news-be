@@ -4,6 +4,7 @@ const articlesRouter = require('./articles.router');
 const commentsRouter = require('./comments.routes');
 const usersRouter = require('./users.routes');
 
+router.get('/', (req, res) => res.status(200).send({ status: 200, msg: 'OK' }));
 router.use('/topics', topicsRouter);
 router.use('/articles', articlesRouter);
 router.use('/comments', commentsRouter);

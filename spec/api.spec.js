@@ -26,6 +26,18 @@ describe('API', () => {
     mongoose.disconnect();
   });
 
+  describe('GET /api', () => {
+    it('returns 200 and msg', () => {
+      return request
+        .get('/api')
+        .expect(200)
+        .then(res => {
+          expect(res.body.status).to.equal(200);
+          expect(res.body.msg).to.equal('OK');
+        });
+    });
+  });
+
   describe('GET /api/topics', () => {
     it('returns 200 and all topics', () => {
       return request
