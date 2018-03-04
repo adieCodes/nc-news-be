@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans|Source+Sans+Pro:700" rel="stylesheet">
+  <link href="/styles/main.css" rel="stylesheet">
+  <title>NC News BE</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1>NC News BE</h1>
+    <h2>API Endpoints</h2>
+
+    <h3>GET
+      <code>/api/topics</code>
+    </h3>
+    <p>Return all topics</p>
+    <h3>GET
+      <code>/api/topics/:topic_id/articles</code>
+    </h3>
+    <p>Return all articles for a particular topic ID</p>
+    <h3>GET
+      <code>/api/articles</code>
+    </h3>
+    <p>Return all articles</p>
+    <h3>GET
+      <code>/api/articles/:article_id/</code>
+    </h3>
+    <p>Return an individual article by its ID</p>
+    <h3>GET
+      <code>/api/articles/:article_id/comments</code>
+    </h3>
+    <p>Return all comments for a single article ID</p>
+    <h3>POST
+      <code>/api/articles/:article_id/comments</code>
+    </h3>
+    <p>Add a new comment to the appropriate article ID</p>
+    <h3>PUT
+      <code>/api/articles/:article_id</code>
+    </h3>
+    <p>Increment/decrement votes on an article</p>
+    <h3>PUT
+      <code>/api/comments/:comment_id</code>
+    </h3>
+    <p>Increment/decrement votes on a comment</p>
+    <h3>DELETE
+      <code>/api/comments/:comment_id</code>
+    </h3>
+    <p>Delete a comment</p>
+    <h3>GET
+      <code>/api/users/:username</code>
+    </h3>
+    <p>Return a user profile</p>
+  </div>
+
+</body>
+
+</html>
