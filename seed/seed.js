@@ -171,8 +171,8 @@ function addComments(docIds, done) {
 
 mongoose.connect(DB, err => {
   if (!err) {
-    logger.info(`connect to database ${DB}`);
-    console.log(`connected to database ${DB}`);
+    logger.info(`connect to ${process.env.NODE_ENV} database`);
+    console.log(`connected to ${process.env.NODE_ENV} database`);
     mongoose.connection.db.dropDatabase();
     async.waterfall([addUsers, addTopics, addArticles, addComments, addNorthcoderUser], error => {
       if (error) {
