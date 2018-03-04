@@ -44,7 +44,7 @@ Each of the applications endpoints, with both successful and unsuccessful reques
 #### Routes
 
 * `GET /api/topics` - Return all topics
-* `GET /api/topics/:topic_id/articles` - Return all articles for a particular topic ID
+* `GET /api/topics/:topic/articles` - Return all articles for a particular topic ID
 * `GET /api/articles` - Return all articles
 * `GET /api/articles/:article_id/` - Return an individual article by its ID
 * `GET /api/articles/:article_id/comments` - Return all comments for a single article ID
