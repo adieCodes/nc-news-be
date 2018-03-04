@@ -1,3 +1,5 @@
+const { mlabsUrls } = require('./config.deployment');
+
 module.exports = {
   PORT: {
     dev: 3000,
@@ -5,6 +7,7 @@ module.exports = {
   },
   DB: {
     dev: 'mongodb://localhost/nc-news',
-    test: 'mongodb://localhost/nc-news-test'
+    test: 'mongodb://localhost/nc-news-test',
+    production: mlabsUrls
   }
 };

@@ -30,7 +30,7 @@ After verifying you have both Node.js and MongoDB installed you can install a lo
 2. Clone this repository from GitHub by running `git clone https://github.com/adieCodes/nc-news-be.git` in the terminal
 3. Add dependencies by typing `npm install` in the terminal
 4. Run an instance of the database using the command `mongod`, this will keep running in that terminal window
-5. Start a new terminal window and enter `node seed/seed.js` to add data to the database. This may take a few minutes as there's a fair amount of data. When the process is complete the console will display 'Database seeded' and the node process will terminate.
+5. Start a new terminal window and enter `npm run seed:dev` to add data to the database. This may take a few minutes as there's a fair amount of data. When the process is complete the console will display 'Database seeded' and the node process will terminate.
 6. You can then run the application using `npm run dev`
 
 ## Running the tests
