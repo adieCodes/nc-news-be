@@ -11,7 +11,9 @@ const async = require('async');
 const mongoose = require('mongoose');
 const log4js = require('log4js');
 const moment = require('moment');
-const DB = require('../config').DB[process.env.NODE_ENV];
+const config = require('../config');
+
+const DB_URI = config.DB[process.env.NODE_ENV] || process.env.DB_URI;
 
 const logger = log4js.getLogger();
 const chance = new Chance();
@@ -169,7 +171,7 @@ function addComments(docIds, done) {
   );
 }
 
-mongoose.connect(DB, err => {
+mongoose.connect(DB_URI, err => {
   if (!err) {
     logger.info(`connect to ${process.env.NODE_ENV} database`);
     console.log(`connected to ${process.env.NODE_ENV} database`);
