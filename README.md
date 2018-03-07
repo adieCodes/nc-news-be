@@ -2,11 +2,11 @@
 
 I have used Node.js, Express and MongoDB to build an API for my [Reddit](https://www.reddit.com/) clone. This repository will store article, comment and user data and their relationships. Serving this information via RESTful endpoints. The frontend for this application will consume this data, I will provide a url for this at a later date.
 
-A link to the deployed version will be added later.
-
 ## Getting Started
 
 I have followed TDD (Test Driven Development) best practises when building this application. If you would like to see the tests in action or run the application locally instructions to do so are below.
+
+If you would prefer you can view a deployed version [here](https://adie-nc-news-be.herokuapp.com/).
 
 ### Prerequisites
 
