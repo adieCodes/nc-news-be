@@ -1,5 +1,7 @@
 /* eslint-disable no-console */
 
+// TODO: If !config.DB_URI use process.env.DB_URI
+
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'dev';
 
 const express = require('express');
@@ -10,14 +12,13 @@ const cors = require('cors');
 const config = require('./config');
 const apiRouter = require('./routes');
 
-const { PORT } = process.env;
-const DB = config.DB[process.env.NODE_ENV];
+const DB_URI = config.DB[process.env.NODE_ENV] || process.env.DB_URI;
 
 mongoose.Promise = global.Promise;
 
 mongoose
-  .connect(DB)
-  .then(console.log('successfully connected to db', DB))
+  .connect(DB_URI)
+  .then(console.log('successfully connected to DB'))
   .catch(err => console.log('connection failed', err));
 
 const app = express();

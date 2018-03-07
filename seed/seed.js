@@ -186,7 +186,7 @@ mongoose.connect(DB, err => {
     });
   } else {
     logger.error('DB ERROR');
-    console.log(JSON.stringify(err));
+    console.log('err', err);
     process.exit();
   }
 });
