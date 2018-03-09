@@ -1,6 +1,6 @@
 module.exports = {
   PORT: {
-    dev: 3000,
+    dev: 5000,
     test: 3090
   },
   DB: {
