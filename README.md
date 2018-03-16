@@ -1,6 +1,10 @@
 # NC News Backend
 
-I have used Node.js, Express and MongoDB to build an API for my [Reddit](https://www.reddit.com/) clone. This repository will store article, comment and user data and their relationships. Serving this information via RESTful endpoints. The frontend for this application will consume this data, I will provide a url for this at a later date.
+Northcoders News is a social news aggregation, web content rating, and discussion website. It is similar to Reddit
+
+Northcoders News has articles which are divided into topics. Each article has user curated ratings and can be up or down voted using the API. Users can also add comments about an article. Comments can also be up or down voted. A user can add comments and remove any comments which they have added.
+
+I have used Node.js, Express and MongoDB to build this application which will store article, comment and user data and their relationships. Serving this information via RESTful endpoints. The frontend for this application will consume this data, I will provide a url for this at a later date.
 
 ## Getting Started
 
