@@ -259,6 +259,16 @@ describe('API', () => {
           expect(res.body.article.belongs_to).to.equal(belongs_to);
         });
     });
+    it('returns 400 if invalid vote query string on valid article', () => {
+      const id = usefulData.articles[0];
+
+      return request
+        .put(`/api/articles/${id}?vote=upBigTime`)
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal('You can only vote using the string up or down');
+        });
+    });
     it('returns 400 and msg if invalid articleId', () => {
       const articleId = 1;
 
