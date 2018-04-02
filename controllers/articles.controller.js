@@ -32,7 +32,7 @@ const getArticleById = (req, res, next) => {
 
 const changeVoteCount = (req, res, next) => {
   const { articleId } = req.params;
-  const voteValue = req.query.vote;
+  const voteValue = req.query.vote.toLowerCase();
 
   if (voteValue !== 'up' && voteValue !== 'down')
     return next({ status: 400, msg: 'You can only vote using the string up or down' });
