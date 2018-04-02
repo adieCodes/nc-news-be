@@ -338,6 +338,31 @@ describe('API', () => {
         });
     });
   });
+  describe('GET /api/users', () => {
+    it('returns 200 and all users', () => {
+      return request
+        .get('/api/users')
+        .expect(200)
+        .then(res => {
+          expect(res.body.users).to.be.an('array');
+          expect(res.body.users.length).to.equal(1);
+        });
+    });
+    it('returns correct user data', () => {
+      const { user } = usefulData;
+
+      return request
+        .get('/api/users')
+        .expect(200)
+        .then(res => {
+          expect(res.body.users[0]).to.be.an('object');
+          expect(res.body.users[0].username).to.eql(user.username);
+          expect(res.body.users[0].name).to.eql(user.name);
+          expect(res.body.users[0].avatar_url).to.eql(user.avatar_url);
+        });
+    });
+  });
+
   describe('GET /api/users/:username', () => {
     it('returns 200, userData and userArticles', () => {
       const { username, name, avatar_url, _id } = usefulData.user;

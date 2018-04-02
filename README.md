@@ -56,7 +56,8 @@ Each of the applications endpoints, with both successful and unsuccessful reques
 * `PUT /api/articles/:article_id` - Increment/decrement votes on an article
 * `PUT /api/comments/:comment_id` - Increment/decrement votes on a comment
 * `DELETE /api/comments/:comment_id` - Delete a comment
-* `GET /api/users/:username` - Return a user profile
+* `GET /api/users` - Return all user profiles
+* `GET /api/users/:username` - Return a user profile along with their articles and comments
 
 ### Build steps
 
