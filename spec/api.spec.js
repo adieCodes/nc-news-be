@@ -259,6 +259,30 @@ describe('API', () => {
           expect(res.body.article.belongs_to).to.equal(belongs_to);
         });
     });
+    it('returns 200, decrements vote and returns article uppercased string', () => {
+      const { _id, title, body, belongs_to } = usefulData.articles[0];
+      const voteCountPrePost = usefulData.articles[0].votes;
+
+      return request
+        .put(`/api/articles/${_id}?vote=DOWN`)
+        .expect(200)
+        .then(res => {
+          expect(res.body.article.votes).to.equal(voteCountPrePost - 1);
+          expect(res.body.article.title).to.equal(title);
+          expect(res.body.article.body).to.equal(body);
+          expect(res.body.article.belongs_to).to.equal(belongs_to);
+        });
+    });
+    it('returns 400 if invalid vote query string on valid article', () => {
+      const id = usefulData.articles[0];
+
+      return request
+        .put(`/api/articles/${id}?vote=upBigTime`)
+        .expect(400)
+        .then(res => {
+          expect(res.body.msg).to.equal('You can only vote using the string up or down');
+        });
+    });
     it('returns 400 and msg if invalid articleId', () => {
       const articleId = 1;
 

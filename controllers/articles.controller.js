@@ -32,7 +32,12 @@ const getArticleById = (req, res, next) => {
 
 const changeVoteCount = (req, res, next) => {
   const { articleId } = req.params;
-  const changeVoteCountBy = req.query.vote === 'up' ? 1 : -1;
+  const voteValue = req.query.vote.toLowerCase();
+
+  if (voteValue !== 'up' && voteValue !== 'down')
+    return next({ status: 400, msg: 'You can only vote using the string up or down' });
+
+  const changeVoteCountBy = voteValue === 'up' ? 1 : -1;
 
   Article.findByIdAndUpdate(articleId, { $inc: { votes: changeVoteCountBy } }, { new: true })
     .then(article => res.status(200).send({ article }))
