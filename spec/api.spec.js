@@ -115,9 +115,21 @@ describe('API', () => {
         .expect(200)
         .then(res => {
           expect(res.body.articles[0].title).to.equal('Football is life');
-          expect(res.body.articles[1].title).to.equal('Cats are great');
-          expect(res.body.articles[2].title).to.equal('Football is fun');
-          expect(res.body.articles[3].title).to.equal('Football is unavoidable');
+          expect(res.body.articles[1].title).to.be.oneOf([
+            'Cats are great',
+            'Football is fun',
+            'Football is unavoidable'
+          ]);
+          expect(res.body.articles[2].title).to.be.oneOf([
+            'Cats are great',
+            'Football is fun',
+            'Football is unavoidable'
+          ]);
+          expect(res.body.articles[3].title).to.be.oneOf([
+            'Cats are great',
+            'Football is fun',
+            'Football is unavoidable'
+          ]);
           expect(res.body.articles[4].title).to.equal('Football is awful');
         });
     });
