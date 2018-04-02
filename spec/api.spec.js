@@ -339,17 +339,22 @@ describe('API', () => {
     });
   });
   describe('GET /api/users/:username', () => {
-    it('returns 200 and user', () => {
+    it('returns 200, userData and userArticles', () => {
       const { username, name, avatar_url, _id } = usefulData.user;
 
       return request
         .get(`/api/users/${username}`)
         .expect(200)
         .then(res => {
-          expect(res.body.user.username).to.equal(username);
-          expect(res.body.user.name).to.equal(name);
-          expect(res.body.user.avatar_url).to.equal(avatar_url);
-          expect(res.body.user._id).to.equal(`${_id}`);
+          expect(res.body.userData.username).to.equal(username);
+          expect(res.body.userData.name).to.equal(name);
+          expect(res.body.userData.avatar_url).to.equal(avatar_url);
+          expect(res.body.userData._id).to.equal(`${_id}`);
+          expect(res.body.userArticles).to.be.an('array');
+          expect(res.body.userArticles.length).to.equal(0);
+          expect(res.body.userComments).to.be.an('array');
+          expect(res.body.userComments).to.be.an('array');
+          expect(res.body.userComments.length).to.equal(4);
         });
     });
     it('returns 400 and msg if invalid articleId', () => {
