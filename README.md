@@ -4,7 +4,7 @@ Northcoders News is a social news aggregation, web content rating, and discussio
 
 Northcoders News has articles which are divided into topics. Each article has user curated ratings and can be up or down voted using the API. Users can also add comments about an article. Comments can also be up or down voted. A user can add comments and remove any comments which they have added.
 
-I have used Node.js, Express and MongoDB to build this application which will store article, comment and user data and their relationships. Serving this information via RESTful endpoints. The frontend for this application will consume this data, I will provide a url for this at a later date.
+I have used Node.js, Express and MongoDB to build this application which will store article, comment and user data and their relationships. Serving this information via RESTful endpoints. The frontend for this application consumes this data, which you can view [here](http://adie-nc-news-fe.herokuapp.com/).
 
 ## Getting Started
 
